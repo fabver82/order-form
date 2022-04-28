@@ -31,30 +31,6 @@ $products = [
 
 $totalValue = 0;
 
-function validate()
-{
-    // TODO: This function will send a list of invalid fields back
-    return [];
-}
 
-function handleForm()
-{
-    // TODO: form related tasks (step 1)
-
-
-    // Validation (step 2)
-    $invalidFields = validate();
-    if (!empty($invalidFields)) {
-        // TODO: handle errors
-    } else {
-        // TODO: handle successful submission
-    }
-}
-
-// TODO: replace this if by an actual check
-$formSubmitted = false;
-if ($formSubmitted) {
-    handleForm();
-}
 
 require 'views/form-view.php';
