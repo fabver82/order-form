@@ -31,7 +31,7 @@
             </ul>
         </nav>
 
-        <form method="post">
+        <form method="post" action="../controller/Food.php">
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="email">E-mail:</label>

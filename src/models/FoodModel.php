@@ -11,6 +11,7 @@ class FoodModel
     public function __construct(DatabaseManager $databaseManager)
     {
         $this->databaseManager = $databaseManager;
+        $this->databaseManager->connect();
     }
 
     public function create(): void
