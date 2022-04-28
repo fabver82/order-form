@@ -2,11 +2,6 @@
 require_once('../models/FoodModel.php');
 require_once '../../config.php';
 
-
-$databaseManager = new DatabaseManager(CONFIG['host'], CONFIG['user'], CONFIG['password'], CONFIG['dbname'], CONFIG['port']);
-$foodModel = new FoodModel($databaseManager);
-
-
 function validate($email, $street, $streetNumber, $city, $zipcode, $products)
 {
     // TODO: This function will send a list of invalid fields back
@@ -49,15 +44,13 @@ function handleForm()
     $invalidFields = validate($email, $street, $streetNumber, $city, $zipcode, $products);
     if (!empty($invalidFields)) {
         // TODO: handle errors
-        return false;
+        header("Location: localhost/index.php?errors=" . $invalidFields);
+        exit;
     } else {
         // TODO: handle successful submission
-        return true;
+        $databaseManager = new DatabaseManager(CONFIG['host'], CONFIG['user'], CONFIG['password'], CONFIG['dbname'], CONFIG['port']);
+        $OrderModel = new FoodModel($databaseManager);
+        $id = $OrderModel->create($email, $street, $streetNumber, $city, $zipcode, $products);
+        header("Location: localhost/index.php?order=" . $id);
     }
-}
-
-// TODO: replace this if by an actual check
-$formSubmitted = false;
-if ($formSubmitted) {
-    handleForm();
 }
