@@ -26,8 +26,8 @@ function validate($email, $street, $streetNumber, $city, $zipcode, $products)
     if (empty($zipcode) or false === filter_var($zipcode, FILTER_VALIDATE_INT)) {
         array_push($invalidFields, $zipcode);
     }
-    if (count($products) != 0) {
-        array_push($invalidFields, $zipcode);
+    if (count($products) == 0) {
+        array_push($invalidFields, $products);
     }
     return $invalidFields;
 }
