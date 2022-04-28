@@ -10,7 +10,8 @@ declare(strict_types=1);
 session_start();
 
 // Use this function when you need to need an overview of these variables
-function whatIsHappening() {
+function whatIsHappening()
+{
     echo '<h2>$_GET</h2>';
     var_dump($_GET);
     echo '<h2>$_POST</h2>';
@@ -21,9 +22,11 @@ function whatIsHappening() {
     var_dump($_SESSION);
 }
 
-// TODO: provide some products (you may overwrite the example)
 $products = [
-    ['name' => 'Your favourite drink', 'price' => 2.5],
+    ['name' => 'Pizza Margharita', 'price' => 2.5],
+    ['name' => 'Hamburger', 'price' => 4.5],
+    ['name' => 'Cheeseburger', 'price' => 3],
+    ['name' => 'Club Sandwich', 'price' => 2.5],
 ];
 
 $totalValue = 0;
@@ -37,6 +40,7 @@ function validate()
 function handleForm()
 {
     // TODO: form related tasks (step 1)
+
 
     // Validation (step 2)
     $invalidFields = validate();
@@ -53,4 +57,4 @@ if ($formSubmitted) {
     handleForm();
 }
 
-require 'form-view.php';
+require 'views/form-view.php';
