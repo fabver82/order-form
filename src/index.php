@@ -21,6 +21,14 @@ function whatIsHappening()
     echo '<h2>$_SESSION</h2>';
     var_dump($_SESSION);
 }
+function getTotalValue($product_ids, $products)
+{
+    $sum = 0;
+    foreach ($product_ids as $id) {
+        $sum += $products[$id]['price'];
+    }
+    return $sum;
+}
 
 $products = [
     ['name' => 'Pizza Margharita', 'price' => 2.5],
@@ -30,7 +38,17 @@ $products = [
 ];
 
 $totalValue = 0;
-
-
+$order = null;
+if (isset($_GET['order'])) {
+    $id = $_GET['order'];
+    require_once('./models/OrderModel.php');
+    require_once('./utilities/DatabaseManager.php');
+    require_once './config.php';
+    $databaseManager = new DatabaseManager(CONFIG['host'], CONFIG['user'], CONFIG['password'], CONFIG['dbname'], CONFIG['port']);
+    $OrderModel = new OrderModel($databaseManager);
+    $order = $OrderModel->find($id);
+    $totalValue = getTotalValue($order['products'], $products);
+    // var_dump($order);
+}
 
 require 'views/form-view.php';

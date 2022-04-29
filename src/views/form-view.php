@@ -30,7 +30,22 @@
                 </li>
             </ul>
         </nav>
-
+        <?php
+        if (isset($_GET['order'])) { ?>
+        <div class="order-confirmation" style="width:100%;background-color:green;text-align:center;">
+            <p>Confirmation of your order</p>
+            <p>You have ordered are :</p>
+            <ul>
+                <?php
+                    foreach ($order['products'] as $id_product) {
+                        echo "<li>" . $products[$id_product]['name'] . "</li>";
+                    }
+                    ?>
+            </ul>
+            <p>To be delivered to <?= $order['street'] ?>, <?= $order['streetNumber'] ?>, <?= $order['zipcode'] ?>
+                <?= $order['city'] ?></p>
+        </div>
+        <?php } else { ?>
         <form method="post" action="../controllers/order.php">
             <div class="form-row">
                 <div class="form-group col-md-6">
@@ -70,7 +85,7 @@
                 <?php foreach ($products as $i => $product) : ?>
                 <label>
                     <?php // <?= is equal to <?php echo 
-                        ?>
+                            ?>
                     <input type="checkbox" value="<?= $i ?>" name="products[<?php echo $i ?>]" />
                     <?php echo $product['name'] ?>
                     -
@@ -80,7 +95,7 @@
 
             <button type="submit" class="btn btn-primary">Order!</button>
         </form>
-
+        <?php } ?>
         <footer>You already ordered <strong>&euro; <?php echo $totalValue ?></strong> in food and drinks.</footer>
     </div>
 

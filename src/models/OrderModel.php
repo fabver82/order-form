@@ -1,5 +1,5 @@
 <?php
-require_once('../utilities/DatabaseManager.php');
+
 // This class is focussed on dealing with queries for one type of data
 // That allows for easier re-using and it's rather easy to find all your queries
 // This technique is called the repository pattern
@@ -63,8 +63,15 @@ class OrderModel
         if (!$q->execute()) {
             die("couldn\'t get an order");
         }
+        $order = $q->fetch(PDO::FETCH_ASSOC);
 
-        return $q->fetch(PDO::FETCH_ASSOC);
+        $q = $this->databaseManager->connection->prepare("SELECT id_product FROM order_product WHERE id_order=:id");
+        $q->bindParam(":id", $id, PDO::PARAM_INT);
+        if (!$q->execute()) {
+            die("couldn\'t get an order");
+        }
+        $order['products'] = $q->fetchAll(PDO::FETCH_COLUMN);
+        return $order;
     }
 
     // Get all

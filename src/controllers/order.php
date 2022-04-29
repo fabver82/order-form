@@ -1,6 +1,7 @@
 <?php
 require_once('../models/FoodModel.php');
 require_once('../models/OrderModel.php');
+require_once('../utilities/DatabaseManager.php');
 require_once '../config.php';
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
