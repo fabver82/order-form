@@ -1,6 +1,10 @@
 <?php
 require_once('../models/FoodModel.php');
-require_once '../../config.php';
+require_once('../models/OrderModel.php');
+require_once '../config.php';
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
 function validate($email, $street, $streetNumber, $city, $zipcode, $products)
 {
@@ -38,19 +42,26 @@ function handleForm()
         $city = filter_var($_POST['city'], FILTER_SANITIZE_ENCODED);
         $zipcode = filter_var($_POST['zipcode'], FILTER_SANITIZE_NUMBER_INT);
         $products = $_POST['products'];
+        // var_dump($_POST['products']);
     }
 
     // Validation (step 2)
     $invalidFields = validate($email, $street, $streetNumber, $city, $zipcode, $products);
     if (!empty($invalidFields)) {
         // TODO: handle errors
-        header("Location: localhost/index.php?errors=" . $invalidFields);
+        // var_dump($invalidFields);
+        $_SESSION['errors'] = $invalidFields;
+        header("Location: ../index.php?errors");
         exit;
     } else {
         // TODO: handle successful submission
         $databaseManager = new DatabaseManager(CONFIG['host'], CONFIG['user'], CONFIG['password'], CONFIG['dbname'], CONFIG['port']);
-        $OrderModel = new FoodModel($databaseManager);
+        $OrderModel = new OrderModel($databaseManager);
+        //var_dump($OrderModel);
         $id = $OrderModel->create($email, $street, $streetNumber, $city, $zipcode, $products);
-        header("Location: localhost/index.php?order=" . $id);
+        // var_dump($id);
+        unset($_SESSION["errors"]);
+        header("Location: ../index.php?order=" . $id);
     }
 }
+handleForm();

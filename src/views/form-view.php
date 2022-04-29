@@ -31,7 +31,7 @@
             </ul>
         </nav>
 
-        <form method="post" action="../controller/Food.php">
+        <form method="post" action="../controllers/order.php">
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="email">E-mail:</label>
@@ -71,7 +71,8 @@
                 <label>
                     <?php // <?= is equal to <?php echo 
                         ?>
-                    <input type="checkbox" value="1" name="products[<?php echo $i ?>]" /> <?php echo $product['name'] ?>
+                    <input type="checkbox" value="<?= $i ?>" name="products[<?php echo $i ?>]" />
+                    <?php echo $product['name'] ?>
                     -
                     &euro; <?= number_format($product['price'], 2) ?></label><br />
                 <?php endforeach; ?>
