@@ -29,6 +29,14 @@ function getTotalValue($product_ids, $products)
     }
     return $sum;
 }
+function productIsChecked($id, $products)
+{
+    foreach ($products as $product) {
+        if ($product == $id) {
+            return 'checked';
+        }
+    }
+}
 
 $products = [
     ['name' => 'Pizza Margharita', 'price' => 2.5],
@@ -38,7 +46,27 @@ $products = [
 ];
 
 $totalValue = 0;
-$order = null;
+if (isset($_SESSION['errors'])) {
+    $order = [
+        'email' => $_SESSION['order']['email'],
+        'street' => $_SESSION['order']['street'],
+        'streetNumber' => $_SESSION['order']['streetNumber'],
+        'city' => $_SESSION['order']['city'],
+        'zipcode' => $_SESSION['order']['zipcode'],
+        'products' => $_SESSION['order']['products'],
+    ];
+    $totalValue = getTotalValue($_SESSION['order']['products'], $products);
+} else {
+    $order = [
+        'email' => '',
+        'street' => '',
+        'streetNumber' => '',
+        'city' => '',
+        'zipcode' => '',
+        'products' => [],
+    ];
+}
+
 if (isset($_GET['order'])) {
     $id = $_GET['order'];
     require_once('./models/OrderModel.php');

@@ -31,8 +31,16 @@
             </ul>
         </nav>
         <?php
+        if (isset($_GET['error'])) { ?>
+        <div class="alert alert-danger" role="alert">
+            <p>Please check the following fields: </p>
+            <?php foreach ($_SESSION['errors'] as $error) { ?>
+            <p><?= $error ?></p>
+            <?php } ?>
+        </div>
+        <?php }
         if (isset($_GET['order'])) { ?>
-        <div class="order-confirmation" style="width:100%;background-color:green;text-align:center;">
+        <div class="alert alert-success" role="alert">
             <p>Confirmation of your order</p>
             <p>You have ordered are :</p>
             <ul>
@@ -50,7 +58,7 @@
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="email">E-mail:</label>
-                    <input type="email" id="email" name="email" class="form-control" />
+                    <input type="email" id="email" name="email" class="form-control" value="<?= $order['email'] ?>" />
                 </div>
                 <div></div>
             </div>
@@ -61,21 +69,24 @@
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="street">Street:</label>
-                        <input type="text" name="street" id="street" class="form-control">
+                        <input type="text" name="street" id="street" class="form-control"
+                            value="<?= $order['street'] ?>" placeholder="Street">
                     </div>
                     <div class="form-group col-md-6">
                         <label for="streetnumber">Street number:</label>
-                        <input type="text" id="streetnumber" name="streetnumber" class="form-control">
+                        <input type="text" id="streetnumber" name="streetnumber" value="<?= $order['streetNumber'] ?>"
+                            class="form-control">
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="city">City:</label>
-                        <input type="text" id="city" name="city" class="form-control">
+                        <input type="text" id="city" name="city" class="form-control" value="<?= $order['city'] ?>">
                     </div>
                     <div class="form-group col-md-6">
                         <label for="zipcode">Zipcode</label>
-                        <input type="text" id="zipcode" name="zipcode" class="form-control">
+                        <input type="text" id="zipcode" name="zipcode" class="form-control"
+                            value="<?= $order['zipcode'] ?>">
                     </div>
                 </div>
             </fieldset>
@@ -86,7 +97,8 @@
                 <label>
                     <?php // <?= is equal to <?php echo 
                             ?>
-                    <input type="checkbox" value="<?= $i ?>" name="products[<?php echo $i ?>]" />
+                    <input type="checkbox" value="<?= $i ?>" name="products[<?php echo $i ?>]"
+                        <?= productIsChecked($i, $order['products']) ?> />
                     <?php echo $product['name'] ?>
                     -
                     &euro; <?= number_format($product['price'], 2) ?></label><br />
